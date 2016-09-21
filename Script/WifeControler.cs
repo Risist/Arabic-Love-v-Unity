@@ -9,6 +9,12 @@ public class WifeControler : MonoBehaviour {
     public SpriteRenderer rendererNormal;
     public SpriteRenderer rendererWife;
 
+    public void setMarrige(bool isOn)
+    {
+        rendererNormal.enabled = !isOn;
+        rendererWife.enabled = isOn;
+    }
+
 
     // cd ChangeDestination
     public float cdChangeDestinationMin = 0.1f, cdChangeDestinationMax = 1.0f;
@@ -18,7 +24,9 @@ public class WifeControler : MonoBehaviour {
     public float maxOffset = 20;
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
+        setMarrige(false);
 
         moveTo = GetComponent<MoveTo>();
         moveTo.autoMove = true;
