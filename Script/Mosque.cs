@@ -13,16 +13,18 @@ public class Mosque : MonoBehaviour {
 	
 	}
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
-        if ( other.gameObject.GetComponent<WifeControler>() != null)
+        if (other.isTrigger == false &&
+            other.gameObject.GetComponent<WifeControler>() != null
+            && other.gameObject.GetComponent<FollowPlayer>().mode == FollowPlayer.Mode.following)
         {
             WifeControler wifeControler = other.gameObject.GetComponent<WifeControler>();
             wifeControler.setMarrige(true);
             wifeControler.enabled = true;
 
-            other.gameObject.GetComponent<FollowPlayer>().enabled = false;
-
+            //other.gameObject.GetComponent<FollowPlayer>().enabled = false;
+            other.gameObject.GetComponent<FollowPlayer>().mode = FollowPlayer.Mode.disabled;
         }
     }
 }

@@ -9,14 +9,14 @@ public class FollowPlayer : MonoBehaviour {
     MoveTo moveTo;
     WifeControler wifeControler;
 
-    enum Mode
+    public enum Mode
     {
         free,
         gainingAttention,
         following,
         disabled
     };
-    Mode mode = Mode.free;
+    public Mode mode = Mode.free;
 
 	// Use this for initialization
 	void Start ()
