@@ -15,6 +15,11 @@ usage:
 [System.Serializable]
 public class Timer
 {
+    public Timer( float _actualTime, float _cd )
+    {
+        actualTime = _actualTime;
+        cd = _cd;
+    }
     // actual time of timmer
     public float actualTime = 0;
     // how much time have to be elapsed from last reset to be ready
