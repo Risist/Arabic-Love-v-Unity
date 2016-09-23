@@ -7,7 +7,7 @@ public class FollowPlayer : MonoBehaviour {
     public Timer tAttention;
     GameObject player;
     MoveTo moveTo;
-    WifeControler wifeControler;
+    RandomMovement randomMovement;
 
     public enum Mode
     {
@@ -22,7 +22,7 @@ public class FollowPlayer : MonoBehaviour {
 	void Start ()
     {
         moveTo = GetComponent<MoveTo>();
-        wifeControler = GetComponent<WifeControler>();
+        randomMovement = GetComponent<RandomMovement>();
 	}
 	
 	// Update is called once per frame
@@ -37,7 +37,7 @@ public class FollowPlayer : MonoBehaviour {
             if (tAttention.isReady())
             {
                 mode = Mode.free;
-                wifeControler.enabled = true;
+                randomMovement.enabled = true;
             }
         }
 
@@ -60,7 +60,7 @@ public class FollowPlayer : MonoBehaviour {
                 mode = Mode.following;
                 player = other.gameObject;
                 tAttention.restart();
-                wifeControler.enabled = false;
+                randomMovement.enabled = false;
             }
         }
     }

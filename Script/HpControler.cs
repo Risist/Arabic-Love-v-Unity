@@ -28,15 +28,15 @@ public class HpControler : MonoBehaviour {
             hp = maxHp;
         else if( isAlive() == false)
         {
-            if(destroyWhenDead)
-                Destroy(gameObject);
-
             onDeathEvent(damage, causer);
+
+            if (destroyWhenDead)
+                Destroy(gameObject);
         }
     }
 
     // called when the object is signed as dead
-    protected virtual void onDeathEvent(float damage, GameObject causer)
+    public virtual void onDeathEvent(float damage, GameObject causer)
     {
         // does nothing without override
     }

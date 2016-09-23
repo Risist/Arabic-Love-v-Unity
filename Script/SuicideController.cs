@@ -31,6 +31,7 @@ public class SuicideController : MonoBehaviour {
             //Debug.Log("My position " + transform.position.ToString());
 
             Instantiate(explosionPrefab, transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)) );
+            GetComponent<HpControler>().dealDamage(-10000, gameObject);
             Destroy(gameObject);
 
             //Vector3 offset = Quaternion.Euler(0, 0, Random.Range(0, 360)) * new Vector3(Random.Range(0, maxOffsetFromCenter), 0);

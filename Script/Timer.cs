@@ -20,6 +20,9 @@ public class Timer
         actualTime = _actualTime;
         cd = _cd;
     }
+    public Timer()
+    {
+    }
     // actual time of timmer
     public float actualTime = 0;
     // how much time have to be elapsed from last reset to be ready
