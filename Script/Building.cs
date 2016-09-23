@@ -4,48 +4,40 @@ using System.Collections;
 public class Building : MonoBehaviour {
 
     //zmiene do ulepszania obiektów
+    MoneyManager mm;
     private SpriteRenderer spriterenderer;
     private Collider2D coll;
     public Sprite[] sprite;
     public int level = 1;
     Spawn sp;
+    BuildHUD bhud;
     
 
     void Start ()
     {
+        mm = GameObject.FindGameObjectWithTag("GameController").GetComponent<MoneyManager>();
         spriterenderer = gameObject.GetComponent<SpriteRenderer>();
         coll = gameObject.GetComponent<Collider2D>();
         sp = gameObject.GetComponentInChildren<Spawn>();
+        spriterenderer.sprite = sprite[0];
+        bhud = GameObject.FindGameObjectWithTag("BuildHud").GetComponent<BuildHUD>();
     }
 	
 	
 	void Update ()
     {
         //kiedy jest nacisk na ekran to zwieksza się poziom
-        if (isTouch())
+        if(bhud.check == true)
         {
-            level++;
+            if (isTouch())
+            {
+                level++;
+                Upgrade(level);
+            }
         }
+        
         //zmienianie cp i spirtów pod wpływem jaki budynejk ma poziom
-        if (level == 1)
-        {
-            spriterenderer.sprite = sprite[0];
-            sp.waitMax = 1;
-            sp.waitMin = 1;
-        }
-        if (level == 2)
-        {
-            spriterenderer.sprite = sprite[1];
-            sp.waitMax = 4;
-            sp.waitMin = 3;
-        }
-        if (level == 3)
-        {
-            spriterenderer.sprite = sprite[2];
-            sp.waitMax = 3;
-            sp.waitMin = 2;
-        }
-        if (level > 3) level = 1;
+        
 
     }
 
@@ -77,5 +69,41 @@ public class Building : MonoBehaviour {
             
         }
         return result;
+    }
+
+    void Upgrade(int level)
+    {
+        if (level == 1)
+        {
+            spriterenderer.sprite = sprite[0];
+            sp.waitMax = 8;
+            sp.waitMin = 7;
+        }
+        
+        if (mm.hasEnoughMoney(30))
+        {
+            if (level == 2)
+            {
+                if (mm.pay(30))
+                {
+                    spriterenderer.sprite = sprite[1];
+                    sp.waitMax = 6;
+                    sp.waitMin = 5;
+                }
+            }
+        }
+        if (mm.hasEnoughMoney(60))
+        {
+            if (level == 3)
+            {
+                if (mm.pay(60))
+                {
+                    spriterenderer.sprite = sprite[2];
+                    sp.waitMax = 4;
+                    sp.waitMin = 3;
+                }
+            }
+        }
+        if (level > 3) level = 3;
     }
 }

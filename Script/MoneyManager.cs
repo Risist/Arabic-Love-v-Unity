@@ -14,7 +14,7 @@ public class MoneyManager : MonoBehaviour {
     // check if you are able to pay cost
     public bool hasEnoughMoney( float cost)
     {
-        return actualMoney > cost;
+        return actualMoney >= cost;
     }
     // if is able to pay a fee do so
     // returns if has enough money to pay
