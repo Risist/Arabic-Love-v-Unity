@@ -17,7 +17,8 @@ public class Mosque : MonoBehaviour {
     {
         if (other.isTrigger == false &&
             other.gameObject.GetComponent<WifeControler>() != null
-            && other.gameObject.GetComponent<FollowPlayer>().mode == FollowPlayer.Mode.following)
+            && other.gameObject.GetComponent<FollowPlayer>().mode == FollowPlayer.Mode.following
+            && other.gameObject.GetComponent<FollowPlayer>().GetPlayer().tag == "Player" )
         {
             WifeControler wifeControler = other.gameObject.GetComponent<WifeControler>();
             wifeControler.setMarrige(true);

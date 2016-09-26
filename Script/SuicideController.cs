@@ -4,8 +4,6 @@ using System.Collections;
 public class SuicideController : MonoBehaviour {
 
     public GameObject explosionPrefab;
-    public Vector3 centerOfDestination;
-    public float maxOffsetFromCenter;
     public Timer timeToExplosion;
     MoveTo moveTo;
 
@@ -14,8 +12,11 @@ public class SuicideController : MonoBehaviour {
         moveTo = GetComponent<MoveTo>();
         moveTo.autoMove = true;
 
+        Transform suicidePlace = GameObject.FindGameObjectWithTag("GameControler").GetComponent<GameControler>().suicidePlace;
+        float maxOffsetFromCenter = GameObject.FindGameObjectWithTag("GameControler").GetComponent<GameControler>().suicideRadius;
+
         Vector3 offset =  Quaternion.Euler(0, 0, Random.Range(0, 360))  * new Vector3(Random.Range(0, maxOffsetFromCenter), 0);
-        moveTo.destination = centerOfDestination + offset;
+        moveTo.destination = suicidePlace.transform.position + offset;
         
     }
 
