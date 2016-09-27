@@ -58,7 +58,7 @@ public class MoveTo : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-	    
+        destination = transform.position;
 	}
 	
 	// Update is called once per frame
