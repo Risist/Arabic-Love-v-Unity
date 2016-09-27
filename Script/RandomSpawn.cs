@@ -49,18 +49,15 @@ public class RandomSpawn : MonoBehaviour {
     public GameObject[] objects;
     public float[] chances;
     public Timer cd;
-    Building build;
+    public float minCd, maxCd;
 
-    void Start()
-    {
-        build = GetComponentInParent<Building>();
-    }
-
+  
     void Update()
     {
         cd.update();
-        if (cd.isReadyRestart(Random.Range(build.minCd,build.maxCd)))
+        if (cd.isReadyRestart(Random.Range(minCd, maxCd)))
         {
+            
             float sum = 0;
             foreach (float it in chances)
                 sum += it;
