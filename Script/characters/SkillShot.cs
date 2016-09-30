@@ -13,6 +13,7 @@ public class SkillShot : MonoBehaviour {
     public float maxAmmo = 10;
 
     Animator animator;
+    AnimatorStateInfo asi;
 
     public bool hasEnoughAmmo()
     {
@@ -45,13 +46,15 @@ public class SkillShot : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        asi = animator.GetCurrentAnimatorStateInfo(0);
         timerBetweenShots.update();
         timerGiveAmmo.update();
 
         if (Input.GetButton("Fire2"))
         {
             animator.SetBool("Fire", true);
-            if (readyToShot && timerBetweenShots.isReady() && useAmmo())
+            
+            if (readyToShot && timerBetweenShots.isReady() && useAmmo() && asi.normalizedTime>2.5f )
             {
                 timerBetweenShots.restart();
                 Instantiate(ammoPrefab, spawnTransform.position, spawnTransform.rotation);
@@ -91,14 +94,9 @@ public class SkillShot : MonoBehaviour {
             actualAmmo++;
         }
 
-        if(playerMovement.move == true)
-        {
-            animator.SetBool("Move", true);
-        }
-        else
-        {
-            animator.SetBool("Move", false);
-        }
+        
+            animator.SetBool("Move", playerMovement.move);
+        
 
 	}
 }
