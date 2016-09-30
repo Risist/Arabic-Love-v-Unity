@@ -11,6 +11,9 @@ public class SkillShot : MonoBehaviour {
 
     public float actualAmmo = 0;
     public float maxAmmo = 10;
+
+    Animator animator;
+
     public bool hasEnoughAmmo()
     {
         return actualAmmo > 0;
@@ -36,6 +39,7 @@ public class SkillShot : MonoBehaviour {
 	void Start () {
         playerMovement = GetComponentInParent<PlayerMovement>();
         moveTo = GetComponentInParent<MoveTo>();
+        animator = GetComponent<Animator>();
     }
 	
 	// Update is called once per frame
@@ -46,6 +50,7 @@ public class SkillShot : MonoBehaviour {
 
         if (Input.GetButton("Fire2"))
         {
+            animator.SetBool("Fire", true);
             if (readyToShot && timerBetweenShots.isReady() && useAmmo())
             {
                 timerBetweenShots.restart();
@@ -56,7 +61,7 @@ public class SkillShot : MonoBehaviour {
             moveTo.rotateToDestination();
             moveTo.autoMove = false;
 
-            
+           
 
             if (hasEnoughAmmo() == false)
             {
@@ -65,6 +70,7 @@ public class SkillShot : MonoBehaviour {
         }
         else
         {
+            animator.SetBool("Fire", false);
             playerMovement.enabled = true;
             moveTo.autoMove = true;
 
@@ -83,6 +89,15 @@ public class SkillShot : MonoBehaviour {
         if( actualAmmo < maxAmmo && timerGiveAmmo.isReadyRestart() )
         {
             actualAmmo++;
+        }
+
+        if(playerMovement.move == true)
+        {
+            animator.SetBool("Move", true);
+        }
+        else
+        {
+            animator.SetBool("Move", false);
         }
 
 	}

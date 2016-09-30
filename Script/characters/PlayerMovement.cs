@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour {
 
     MoveTo moveTo;
+    public bool move;
 
     public void computeMousePos()
     {
@@ -22,6 +23,14 @@ public class PlayerMovement : MonoBehaviour {
 	void Update ()
     {
         if(Input.GetButton("Fire1"))
+        {
             computeMousePos();
+            move = true;
+        }
+        else
+        {
+            move = false;
+        }
+            
     }
 }
