@@ -23,8 +23,10 @@ public class PlayerMovement : MonoBehaviour {
 	void Update ()
     {
         if(Input.GetButton("Fire1"))
-        {
             computeMousePos();
+            
+        if(moveTo.check())
+        {
             move = true;
         }
         else
