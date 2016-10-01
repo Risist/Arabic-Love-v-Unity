@@ -22,6 +22,7 @@ public class ShopCreateButton : MonoBehaviour
     FollowMouse spawnFollowMouse;
     NoBuildCollision spawnNoBuildCollision;
 
+    public GameObject smoke;
 
     enum Mode
     {
@@ -186,7 +187,7 @@ public class ShopCreateButton : MonoBehaviour
                 setMode(Mode.disabled);
                 shop.resetBuild();
                 moneyManager.pay(cost);
-
+                Instantiate(smoke, spawnVisualisation.transform.position, spawnVisualisation.transform.rotation);
                 if (ProjectSettings.debugLogEnabled_building)
                     Debug.Log("builded");
             }
