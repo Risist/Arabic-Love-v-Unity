@@ -5,7 +5,7 @@ using System;
 
 /**/
 
-public abstract class Building : MonoBehaviour
+public class Building : MonoBehaviour
 {
     
     // graphical data
@@ -28,12 +28,19 @@ public abstract class Building : MonoBehaviour
         // maxLevel is depended from how much graphics are added
         return sprite.Length;
     }
+    bool canUpgrade()
+    {
+        int maxLvl = getMaxLevel() - 1;
+        return level < maxLvl;
+    }
     void levelUp()
     {
         // stay under max lvl
         // pay for upgrade if has enough money
         // if not do nothing
-        if(level < getMaxLevel() && moneyManager.pay(getActualCost()))
+        
+
+        if( canUpgrade() && moneyManager.pay(getActualCost()))
         {
             ++level; // lvl up
             updateLvlBonus(); // lvl bonus
@@ -45,43 +52,61 @@ public abstract class Building : MonoBehaviour
     // what happens when level is increased?
     // update our bonus!
     // to override
-    protected abstract void updateLvlBonus();
+    protected virtual void updateLvlBonus()
+    {
+
+    }
 
     // hud data
     Collider2D coll;
+    GameObject upgradeButton;
+    FollowGameObject upgradeFollow;
+
+    UpgradeManager upgradeManager;
 
     void Start()
     {
-        moneyManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MoneyManager>();
+        GameObject gameController = GameObject.FindGameObjectWithTag("GameController");
+        moneyManager = gameController.GetComponent<MoneyManager>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = sprite[level]; 
         
         // hud
         coll = gameObject.GetComponent<Collider2D>();
+
+        upgradeManager = gameController.GetComponentInChildren<UpgradeManager>();
+
+        upgradeFollow = upgradeManager.upgradeButton.GetComponent<FollowGameObject>();
+        upgradeButton = upgradeManager.upgradeButton;
     }
 
     void Update()
     {
-        if (isTouch())
+        if (isMouseOnCollider(ProjectSettings.mouseTouch) && canUpgrade())
+        {
+            upgradeButton.SetActive(true);
+            upgradeFollow.objectToFollow = gameObject;
+        }
+
+        if( upgradeFollow.objectToFollow == gameObject && upgradeManager.isPressed())
         {
             levelUp();
+            if(canUpgrade() == false)
+            {
+                upgradeButton.SetActive(false);
+            }
         }
     }
     
-    public bool isTouch()
+    public bool isMouseOnCollider(bool useMouse)
     {
-        bool result = false;
-        
-        if (Input.GetButtonUp("Fire1"))
-        {
-            Vector3 wp = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-            Vector2 touchpos = new Vector2(wp.x, wp.y);
-            if (coll == Physics2D.OverlapPoint(touchpos))
-            {
-               result = true;
-            }
-        }
-        return result;
+        Vector3 wp;
+        if(useMouse)
+            wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        else
+            wp = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+        Vector2 touchpos = new Vector2(wp.x, wp.y);
+        return coll == Physics2D.OverlapPoint(touchpos);
     }
 
 }
