@@ -14,7 +14,7 @@ public class NoBuildCollision : MonoBehaviour {
     public bool isOnCollision()
     {
         bool r = onCollision;
-        onCollision = false;
+        
         return r;
     }
     
@@ -22,19 +22,19 @@ public class NoBuildCollision : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	}
-
 	
 	// Update is called once per frame
-	void Update () {
-
-	}
+	void LateUpdate () {
+        onCollision = false;
+    }
     void OnTriggerStay2D(Collider2D other)
     {
        
 
         if (other.isTrigger == false)
         {
-            Debug.Log("Tag:" + other.gameObject.tag);
+            if(ProjectSettings.debugLogEnabled_buildingTag)
+                Debug.Log("Tag:" + other.gameObject.tag);
             if (other.gameObject.tag == "Building")
             {
                 onCollision = true;

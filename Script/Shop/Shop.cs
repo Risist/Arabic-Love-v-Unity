@@ -16,6 +16,7 @@ public class Shop : MonoBehaviour {
 
     public ShopCreateButton[] creationButtons;
     public SpawnPointData[] spawnPoints;
+    GameObject upgradeButton;
 
 
     public GameObject[] menuObjects;
@@ -33,11 +34,15 @@ public class Shop : MonoBehaviour {
 
     void Start()
     {
+        upgradeButton = GameObject.FindGameObjectWithTag("GameController")
+            .GetComponentInChildren<UpgradeManager>().upgradeButton;
         setOpen(open);
     }
 
     // for mantain all buttons together
 
+    // to prevent from building two different buildings at the same time
+    // using two buttons
     bool onBuild = false;
     public bool tryToBuild()
     {
@@ -54,6 +59,7 @@ public class Shop : MonoBehaviour {
         onBuild = false;
     }
 
+    //
     bool cancelBuild;
     public bool receiveCancelBuild()
     {
@@ -77,6 +83,8 @@ public class Shop : MonoBehaviour {
     public void onBuildButtonPress()
     {
         setOpen(!getOpen());
+        //if(open == false)
+        upgradeButton.SetActive(false);
     }
 	
 }
