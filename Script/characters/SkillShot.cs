@@ -52,10 +52,14 @@ public class SkillShot : MonoBehaviour {
         {
             //animator.speed = 3.0f;
             animator.SetBool("Fire", true);
-            if (readyToShot && timerBetweenShots.isReady() && useAmmo() && asi.normalizedTime > 2.5f)
+            animator.SetBool("Move", false);
+            if (asi.normalizedTime > 2.5f)
             {
-                timerBetweenShots.restart();
-                Instantiate(ammoPrefab, spawnTransform.position, spawnTransform.rotation);
+                if (readyToShot && timerBetweenShots.isReady() && useAmmo())
+                {
+                    timerBetweenShots.restart();
+                    Instantiate(ammoPrefab, spawnTransform.position, spawnTransform.rotation);
+                }
             }
             playerMovement.enabled = false;
             playerMovement.computeMousePos();
